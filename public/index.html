@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>VERITAS – Your Truth. Your Pattern. Your Story.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="VERITAS generates a structured personality pattern using archetypes, psychology and symbolic analysis." />
+
+<style>
+:root {
+  --deep-petrol: #05161a;
+  --deep-petrol-2: #0a2a30;
+  --light-offwhite: #f7f7f5;
+  --glass-bg: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.12);
+  --gold: #d9b56b;
+  --indigo: #3a4cff;
+  --text-main: #ffffff;
+  --text-muted: #b8c4c4;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: radial-gradient(circle at 40% 20%, var(--deep-petrol-2), var(--deep-petrol));
+  color: var(--text-main);
+}
+
+.page { min-height: 100vh; display: flex; flex-direction: column; }
+main { flex: 1; padding: 0 6vw 48px; max-width: 1200px; margin: 0 auto; }
+
+header {
+  padding: 24px 6vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.4rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-mark {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1px solid var(--gold);
+  background: radial-gradient(circle at 30% 20%, var(--gold), transparent 60%);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 40px;
+  padding: 40px 0;
+}
+
+.hero-title {
+  font-size: clamp(2.2rem, 4vw, 3.1rem);
+  line-height: 1.1;
+}
+.hero-title span { color: var(--gold); }
+.hero-subtitle { color: var(--text-muted); max-width: 520px; margin: 20px 0; }
+
+.btn-primary {
+  padding: 14px 28px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, var(--gold), var(--indigo));
+  color: #000;
+  font-weight: 600;
+  letter-spacing: .14em;
+  cursor: pointer;
+}
+
+.glass {
+  border-radius: 18px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  padding: 22px;
+}
+
+.section { padding: 48px 0; }
+.section-kicker {
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  font-size: .75rem;
+}
+.section-title { font-size: 1.7rem; margin: 8px 0; }
+.section-subtitle { color: var(--text-muted); max-width: 520px; }
+
+.form-container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 36px 30px;
+  background: rgba(5,22,26,0.94);
+  border: 1px solid var(--glass-border);
+  border-radius: 22px;
+}
+
+.input-group { margin-bottom: 22px; position: relative; }
+
+label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 999px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--indigo);
+  background: rgba(255,255,255,0.07);
+}
+
+#city-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: rgba(5,22,26,0.98);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 20;
+}
+
+.suggestion-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.suggestion-item:hover,
+.suggestion-item[aria-selected="true"] {
+  background: rgba(255,255,255,0.08);
+}
+
+#result-area {
+  margin-top: 26px;
+  padding: 20px;
+  background: rgba(0,0,0,0.75);
+  border-radius: 14px;
+  border-left: 3px solid var(--indigo);
+  font-family: ui-monospace, monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  display: none;
+}
+
+.loading-text { display: none; text-align: center; color: var(--gold); margin-top: 16px; }
+
+@media(max-width: 900px){
+  .hero { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+<header>
+  <div class="logo"><div class="logo-mark"></div>VERITAS</div>
+</header>
+
+<main>
+<section class="hero">
+  <div>
+    <h1 class="hero-title">Discover Your <span>Veritas</span></h1>
+    <p class="hero-subtitle">A structured personality blueprint based on archetypes and psychological dynamics.</p>
+    <button class="btn-primary" onclick="document.getElementById('generate').scrollIntoView({behavior:'smooth'})">Start</button>
+  </div>
+  <div class="glass">
+    <strong style="color:var(--gold)">Sample Core Pattern</strong>
+    <p class="section-subtitle">The Strategic Observer – analytical, composed, future-oriented.</p>
+  </div>
+</section>
+
+<section class="section" id="generate">
+  <div class="form-container">
+    <div class="input-group">
+      <label for="name">Full Name</label>
+      <input id="name" required />
+    </div>
+
+    <div class="input-group" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <label for="birthdate">Date of Birth</label>
+        <input type="date" id="birthdate" required />
+      </div>
+      <div>
+        <label for="birthtime">Time of Birth</label>
+        <input type="time" id="birthtime" required />
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="location">Place of Birth</label>
+      <input id="location" autocomplete="off" aria-autocomplete="list" aria-expanded="false" />
+      <div id="city-suggestions" role="listbox"></div>
+    </div>
+
+    <input type="hidden" id="lat" />
+    <input type="hidden" id="lon" />
+
+    <button class="btn-primary" style="width:100%" onclick="generateReport()">Generate Profile</button>
+    <div id="loading" class="loading-text">Decoding pattern…</div>
+    <div id="result-area"></div>
+  </div>
+</section>
+</main>
+
+<footer style="padding:20px 6vw;color:var(--text-muted);font-size:.8rem">VERITAS · Structured Archetypal Diagnostics</footer>
+</div>
+
+<script>
+const nameInput = document.getElementById('name');
+const birthdateInput = document.getElementById('birthdate');
+const birthtimeInput = document.getElementById('birthtime');
+const locationInput = document.getElementById('location');
+const latInput = document.getElementById('lat');
+const lonInput = document.getElementById('lon');
+const suggestionsBox = document.getElementById('city-suggestions');
+const resultArea = document.getElementById('result-area');
+const loading = document.getElementById('loading');
+
+let controller;
+locationInput.addEventListener('input', async () => {
+  const q = locationInput.value.trim();
+  suggestionsBox.innerHTML = '';
+  if (q.length < 3) return;
+
+  if (controller) controller.abort();
+  controller = new AbortController();
+
+  try {
+    const res = await fetch(`/geo?q=${encodeURIComponent(q)}`, { 
+      signal: controller.signal 
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    data.forEach((c) => {
+      const div = document.createElement('div');
+      div.className = 'suggestion-item';
+      div.textContent = c.label;
+      div.role = 'option';
+      div.onclick = () => {
+        locationInput.value = c.label;
+        latInput.value = c.lat;
+        lonInput.value = c.lon;
+        suggestionsBox.innerHTML = '';
+      };
+      suggestionsBox.appendChild(div);
+    });
+  } catch(e) {
+    console.error('Geocoding error:', e);
+  }
+});
+
+// Close suggestions when clicking outside
+document.addEventListener('click', (e) => {
+  if (!locationInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+    suggestionsBox.innerHTML = '';
+  }
+});
+
+function validatePayload(payload) {
+  if (!payload.name) return 'Name is required.';
+  if (!payload.date) return 'Birth date is required.';
+  if (!payload.time) return 'Birth time is required.';
+  if (!payload.lat || !payload.lon) return 'Birth location is required.';
+  return null;
+}
+
+function buildPayload() {
+  return {
+    name: nameInput.value.trim(),
+    date: birthdateInput.value,
+    time: birthtimeInput.value,
+    lat: Number(latInput.value),
+    lon: Number(lonInput.value)
+  };
+}
+
+async function callEngine(payload) {
+  const FUNCTION_URL = 'https://faas-ams3-2a2df116.doserverless.co/api/v1/web/fn-83ffe670-e8fe-484d-849f-3cb6e92373f4/verity-core4/horoscope';
+  
+  const res = await fetch(FUNCTION_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!res.ok) {
+    throw new Error(`Engine error: ${res.status}`);
+  }
+
+  return res.json();
+}
+
+async function generateReport() {
+  const payload = buildPayload();
+  const error = validatePayload(payload);
+
+  if (error) {
+    alert(error);
+    return;
+  }
+
+  loading.style.display = 'block';
+  resultArea.style.display = 'none';
+
+  try {
+    const data = await callEngine(payload);
+    resultArea.textContent = data.report || JSON.stringify(data, null, 2);
+    resultArea.style.display = 'block';
+  } catch (err) {
+    console.error(err);
+    alert('Engine connection failed. Please try again later.');
+  } finally {
+    loading.style.display = 'none';
+  }
+}
+</script>
+</body>
+</html>
