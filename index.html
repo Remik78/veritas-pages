@@ -252,7 +252,7 @@ locationInput.addEventListener('input', async () => {
   controller = new AbortController();
 
   try {
-    const res = await fetch(`/geo?name=${encodeURIComponent(q)}`, { 
+    const res = await fetch(`https://veritas-final-geo.veritas-astrologyproject.workers.dev/?name=${encodeURIComponent(q)}`, {
       signal: controller.signal 
     });
     if (!res.ok) return;
