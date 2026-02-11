@@ -252,7 +252,6 @@ locationInput.addEventListener('input', async () => {
   controller = new AbortController();
 
   try {
-    // ZMIANA: Użycie Open-Meteo API zamiast niedziałającego Workera
     const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=5&language=en&format=json`, {
       signal: controller.signal 
     });
@@ -265,7 +264,6 @@ locationInput.addEventListener('input', async () => {
     data.results.forEach((c) => {
       const div = document.createElement('div');
       div.className = 'suggestion-item';
-      // Formatowanie: Miasto, Kraj
       const label = `${c.name}, ${c.country_code.toUpperCase()}`;
       div.textContent = label;
       div.role = 'option';
@@ -308,8 +306,8 @@ function buildPayload() {
 }
 
 async function callEngine(payload) {
-  // ZMIANA: Poprawny Web Action URL z DigitalOcean
-  const FUNCTION_URL = 'https://faas-ams3-2a2df116.doserverless.co/api/v1/web/fn-83ffe670-e8fe-484d-849f-3cb6e92373f4/verity-engine/engine';
+  // ADRES ZAKTUALIZOWANY: Kieruje do Twojej aplikacji na DigitalOcean
+  const FUNCTION_URL = 'https://verity-engine-engine-4u82h.ondigitalocean.app/verity-core/verity-core/engine';
   
   const res = await fetch(FUNCTION_URL, {
     method: 'POST',
@@ -342,7 +340,7 @@ async function generateReport() {
     resultArea.style.display = 'block';
   } catch (err) {
     console.error(err);
-    alert('Engine connection failed. Please ensure you selected a location from the suggestions.');
+    alert('Engine connection failed. Check console for details.');
   } finally {
     loading.style.display = 'none';
   }
