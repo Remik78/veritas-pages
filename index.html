@@ -306,8 +306,8 @@ function buildPayload() {
 }
 
 async function callEngine(payload) {
-  // ADRES ZAKTUALIZOWANY: Kieruje do Twojej aplikacji na DigitalOcean
-  const FUNCTION_URL = 'https://verity-engine-engine-4u82h.ondigitalocean.app/verity-core/verity-core/engine';
+  // NOWA, POPRAWNA ŚCIEŻKA DO SILNIKA (/api/)
+  const FUNCTION_URL = 'https://verity-engine-engine-4u82h.ondigitalocean.app/api/verity-core/engine';
   
   const res = await fetch(FUNCTION_URL, {
     method: 'POST',
