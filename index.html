@@ -252,7 +252,6 @@ locationInput.addEventListener('input', async () => {
   controller = new AbortController();
 
   try {
-    // POPRAWKA: Zmiana parametru 'q' na 'name', aby zgadzało się z backendem geo.js
     const res = await fetch(`/geo?name=${encodeURIComponent(q)}`, { 
       signal: controller.signal 
     });
@@ -276,7 +275,6 @@ locationInput.addEventListener('input', async () => {
   }
 });
 
-// Close suggestions when clicking outside
 document.addEventListener('click', (e) => {
   if (!locationInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
     suggestionsBox.innerHTML = '';
@@ -302,7 +300,7 @@ function buildPayload() {
 }
 
 async function callEngine(payload) {
-  const FUNCTION_URL = 'https://faas-ams3-2a2df116.doserverless.co/api/v1/web/fn-83ffe670-e8fe-484d-849f-3cb6e92373f4/verity-core4/horoscope';
+  const FUNCTION_URL = 'https://faas-ams3-2a2df116.doserverless.co/api/v1/web/fn-83ffe670-e8fe-484d-849f-3cb6e92373f4/verity-engine/engine';
   
   const res = await fetch(FUNCTION_URL, {
     method: 'POST',
@@ -343,3 +341,4 @@ async function generateReport() {
 </script>
 </body>
 </html>
+
